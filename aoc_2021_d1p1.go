@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 func main() {
-	lines, err := readinput(`C:\Users\alael\Documents\Go\AoC\2021\inp_d1.txt`)
+	start := time.Now()
+	lines, err := readinput(`C:\Users\alael\Documents\Go\AoC\2021\data\inp_d1.txt`)
 	if err != nil {
 		return
 	}
 	fmt.Println(ascend(lines))
+	fmt.Println(time.Since(start))
 
 }
 

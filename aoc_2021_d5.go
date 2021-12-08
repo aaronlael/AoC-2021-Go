@@ -23,15 +23,26 @@ func main() {
 	/// part 1
 	c := 0
 	for k, _ := range coords {
-		for k2, v := range coords[k] {
+		for _, v := range coords[k] {
 			if v > 1 {
-				fmt.Println(k, k2)
 				c += 1
 			}
 		}
 	}
-	fmt.Println(c)
+	fmt.Println("part 1:", c)
 	/// part 2
+	for _, l := range lines {
+		coords = handlediags(coords, l)
+	}
+	c = 0
+	for k, _ := range coords {
+		for _, v := range coords[k] {
+			if v > 1 {
+				c += 1
+			}
+		}
+	}
+	fmt.Println("part 2:", c)
 	fmt.Println(time.Since(start))
 }
 
@@ -58,6 +69,29 @@ func addcoords(coords map[string]map[string]int, coordset string) map[string]map
 		for sx != ex+offset {
 			coords = mapadd(coords, sx, sy)
 			sx += offset
+		}
+	}
+	return coords
+}
+func handlediags(coords map[string]map[string]int, coordset string) map[string]map[string]int {
+	sx, sy, ex, ey := coordform(coordset)
+	var xoffset int
+	var yoffset int
+	if sx != ex && sy != ey {
+		if sx > ex {
+			xoffset = -1
+		} else {
+			xoffset = 1
+		}
+		if sy > ey {
+			yoffset = -1
+		} else {
+			yoffset = 1
+		}
+		for sx != ex+xoffset {
+			coords = mapadd(coords, sx, sy)
+			sx += xoffset
+			sy += yoffset
 		}
 	}
 	return coords
